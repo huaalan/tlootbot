@@ -20,7 +20,7 @@ module.exports = {
 	async execute(interaction) {
         const choice = interaction.options.getString('channel_type');
         const row = new ActionRowBuilder();
-        var instr;
+        let instr;
 
         if ( choice === 'upload_channel' ) {
             instr = 'Select channel where loot image is uploaded.';
