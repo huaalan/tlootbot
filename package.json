@@ -1,0 +1,36 @@
+{
+  "name": "tlootbot",
+  "version": "1.0.0",
+  "description": "A Discord bot to post items from a screen shot using OCR.",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "register": "node deploy-commands.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "throne",
+    "liberty",
+    "tnl",
+    "loot",
+    "item"
+  ],
+  "author": "Alan",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "discord.js": "^14.17.3",
+    "dotenv": "^16.4.7",
+    "quick.db": "^9.1.7",
+    "sqlite.js": "^0.0.2-security",
+    "tesseract.js": "^6.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "eslint": "^9.19.0"
+  }
+}
