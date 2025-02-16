@@ -45,11 +45,19 @@ module.exports = {
             console.log('Title: ' + extract_result.title + ' Trait: ' + extract_result.trait);
 
             let channel = await client.channels.fetch(thread_channel_id);
-            let thread = await channel.threads.create({
-                name: extract_result.title,
-                message: {content: 'Trait: ' + extract_result.trait}
-            });
-            
+            let thread;
+            if (channel === null) {
+                await interaction.reply({ content: 'Channel not found. Please set a channel with /settings.', flags: MessageFlags.Ephemeral });
+                return;
+            } else if (!channel.type === 15) {
+                await interaction.reply({ content: 'Set channel is not a forum channel.', flags: MessageFlags.Ephemeral });
+                return;
+            } else {
+                thread = await channel.threads.create({
+                    name: extract_result.title,
+                    message: {content: 'Trait: ' + extract_result.trait}
+                });
+            }
             new_threads.push(thread.url);
         };
         await worker.terminate();
