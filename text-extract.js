@@ -1,5 +1,6 @@
+
 module.exports = {
-  text_extract: (text_lines) => {
+  textExtract: (text_lines) => {
     let title;
     let trait;
 

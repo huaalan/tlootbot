@@ -9,7 +9,8 @@ const {
 const { createWorker } = require('tesseract.js');
 const { QuickDB } = require("quick.db");
 const db = new QuickDB();
-const { text_extract } = require('./../../extraction.js');
+const { textExtract } = require('./../../text-extract.js');
+const { getItemImage } = require('./../../get-item-image.js');
 
 const client = new Client({ 
     intents: [
@@ -41,8 +42,9 @@ module.exports = {
             // so we can extract the title and trait
             let text_lines = ret.data.text.split("\n");
             
-            let extract_result = text_extract(text_lines);
+            let extract_result = textExtract(text_lines);
             console.log('Title: ' + extract_result.title + ' Trait: ' + extract_result.trait);
+            let image_embed = getItemImage(extract_result.title);
 
             let channel = await client.channels.fetch(thread_channel_id);
             let thread;
@@ -53,10 +55,17 @@ module.exports = {
                 await interaction.reply({ content: 'Set channel is not a forum channel.', flags: MessageFlags.Ephemeral });
                 return;
             } else {
+                // Create a thread with the extracted title and trait
                 thread = await channel.threads.create({
                     name: extract_result.title,
-                    message: {content: 'Trait: ' + extract_result.trait}
+                    message: {
+                        content: 'Trait: ' + extract_result.trait
+                    }
                 });
+                // Add the image embed if it exists
+                if (image_embed) {
+                    thread.message.embeds = [image_embed];
+                }
             }
             new_threads.push(thread.url);
         };
